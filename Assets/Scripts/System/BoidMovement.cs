@@ -10,7 +10,6 @@ partial struct BoidMovement : ISystem
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<DirectionData>();
         query = state.GetEntityQuery(ComponentType.ReadOnly<LocalTransform>());
     }
 
