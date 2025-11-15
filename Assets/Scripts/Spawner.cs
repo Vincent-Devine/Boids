@@ -1,27 +1,39 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private GameObject boil;
-    [SerializeField] private int number = 100;
-    [SerializeField] private float spacing = 10.0f;
+    [SerializeField] private GameObject prefab;
+    [SerializeField] private GameObject boidParent;
+    [SerializeField] private BoidSettings boidSettings;
+    [SerializeField] private int spawnNumber = 50;
+    [SerializeField] private float spawnRadius = 10.0f;
 
     void Awake()
     {
-        int gridSize = Mathf.CeilToInt(Mathf.Pow(number, 1f / 3f));
-        int spawned = 0;
-
-        for (int x = 0; x < gridSize && spawned < number; x++)
+        for (int i = 0; i < spawnNumber; i++)
         {
-            for (int y = 0; y < gridSize && spawned < number; y++)
-            {
-                for (int z = 0; z < gridSize && spawned < number; z++)
-                {
-                    Vector3 position = new Vector3(x * spacing, y * spacing, z * spacing);
-                    Instantiate(boil, position, Quaternion.identity);
-                    spawned++;
-                }
-            }
+            Vector3 position = transform.position + Random.insideUnitSphere * spawnRadius;
+            OO_Boid boid = Instantiate(prefab, position, Random.rotation).GetComponent<OO_Boid>();
+            boid.transform.parent = boidParent.transform;
+            boid.Initialize(boidSettings);
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        DrawGizmo();
+    }
+
+    private void OnDrawGizmos()
+    {
+        DrawGizmo();
+    }
+
+    private void DrawGizmo()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, spawnRadius);
     }
 }

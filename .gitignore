@@ -35,6 +35,9 @@
 .vs/
 .vsconfig
 
+# JetBrains Rider
+.idea
+
 # Gradle cache directory
 .gradle/
 
