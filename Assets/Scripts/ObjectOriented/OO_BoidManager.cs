@@ -39,6 +39,10 @@ public class OO_BoidManager : MonoBehaviour
                     if (sqrDistance < boidSettings.avoidanceRadius * boidSettings.avoidanceRadius)
                         boidA.avgAvoidanceHeading -= offset / sqrDistance;
                 }
+                                    
+                boidA.avgFlockHeading.y = 0.0f;
+                boidA.centerOffFlockmates.y = 0.0f;
+                boidA.avgAvoidanceHeading.y = 0.0f;
             }
 
             boidA.ManualUpdate();

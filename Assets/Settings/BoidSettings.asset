@@ -18,8 +18,8 @@ MonoBehaviour:
   avoidanceRadius: 1
   maxSteerForce: 8
   alignmentWeight: 2
-  cohesionWeight: 1
-  separationWeight: 2.5
+  cohesionWeight: 0.5
+  separationWeight: 3
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64

@@ -14,7 +14,7 @@ public class Spawner : MonoBehaviour
     {
         for (int i = 0; i < spawnNumber; i++)
         {
-            Vector3 position = transform.position + Random.insideUnitSphere * spawnRadius;
+            Vector3 position = transform.position + new Vector3(Random.Range(0.0f, spawnRadius), 0.0f, Random.Range(0.0f, spawnRadius));
             OO_Boid boid = Instantiate(prefab, position, Random.rotation).GetComponent<OO_Boid>();
             boid.transform.parent = boidParent.transform;
             boid.Initialize(boidSettings);

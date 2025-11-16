@@ -6,9 +6,19 @@ public class OO_Boid : MonoBehaviour
 {
     private BoidSettings boidSettings;
 
+    private static readonly Vector3[] rayDirections2D =
+    {
+        new Vector3( 1.0f, 0.0f,  0.0f),
+        new Vector3(-1.0f, 0.0f,  0.0f),
+        new Vector3( 0.0f, 0.0f,  1.0f),
+        new Vector3( 0.0f, 0.0f, -1.0f),
+        new Vector3( 1.0f, 0.0f,  1.0f).normalized,
+        new Vector3( 1.0f, 0.0f, -1.0f).normalized,
+        new Vector3(-1.0f, 0.0f, -1.0f).normalized,
+        new Vector3(-1.0f, 0.0f,  1.0f).normalized,
+    };
+    
     // State
-    [HideInInspector] public Vector3 position;
-    [HideInInspector] public Vector3 forward;
     private Vector3 velocity;
     
     // Update
@@ -17,15 +27,19 @@ public class OO_Boid : MonoBehaviour
     [HideInInspector] public Vector3 avgAvoidanceHeading;
     [HideInInspector] public Vector3 centerOffFlockmates;
     [HideInInspector] public int numPerceivedFlockmates;
+    
+    // Cache
+    [HideInInspector] public Vector3 position;
+    [HideInInspector] public Vector3 forward;
 
     public void Initialize(BoidSettings boidSettings)
     {
         this.boidSettings = boidSettings;
+        
         position = transform.position;
         forward = transform.forward;
-        
         float startSpeed = (boidSettings.minSpeed + boidSettings.maxSpeed) / 2;
-        velocity = transform.forward * startSpeed;
+        velocity = forward * startSpeed;
     }
 
     public void ManualUpdate()
@@ -58,59 +72,42 @@ public class OO_Boid : MonoBehaviour
         Vector3 direction = velocity / speed;
         speed = Mathf.Clamp(speed, boidSettings.minSpeed, boidSettings.maxSpeed);
         velocity = direction * speed;
+
+        velocity.y = 0.0f;
+        direction.y = 0.0f;
         
         transform.position += velocity * Time.deltaTime;
         transform.forward = direction;
-        position = transform.position;
-        forward = direction;
+        
+        position =  transform.position;
+        forward = transform.forward;
     }
 
     private Vector3 SteerTowards(Vector3 vector)
     {
         Vector3 v = vector.normalized * boidSettings.maxSpeed - velocity;
+        v.y = 0.0f;
         return Vector3.ClampMagnitude(v, boidSettings.maxSteerForce);
     }
     
     private bool IsHeadingForCollision()
     {
         RaycastHit hit;
-        return Physics.SphereCast(transform.position, boidSettings.boundsRadius, transform.forward, out hit, boidSettings.collisionAvoidDist, boidSettings.obstacleMask);
+        return Physics.SphereCast(position, boidSettings.boundsRadius, forward, out hit, boidSettings.collisionAvoidDist, boidSettings.obstacleMask);
     }
 
     private Vector3 ObstacleRays()
     {
-        Vector3[] rayDirections = GetRayDirections();
-        for (int i = 0; i < rayDirections.Length; i++)
+        Vector3[] rayDirections = rayDirections2D;
+        RaycastHit hit;
+
+        foreach (Vector3 rayDirection in rayDirections)
         {
-            Vector3 direction = transform.TransformDirection(rayDirections[i]);
-            Ray ray = new Ray(position, direction);
-            if(!Physics.SphereCast(ray, boidSettings.boundsRadius, boidSettings.collisionAvoidDist, boidSettings.obstacleMask))
+            Vector3 direction = transform.TransformDirection(rayDirection);
+            if (!Physics.SphereCast(position, boidSettings.boundsRadius, direction, out hit, boidSettings.collisionAvoidDist, boidSettings.obstacleMask))
                 return direction;
         }
         
         return forward;
-    }
-    
-    private Vector3[] GetRayDirections()
-    {
-        const int NUM_VIEW_DIRECTION = 300;
-        Vector3[] directions = new Vector3[NUM_VIEW_DIRECTION];
-
-        const float GOLDEN_RATIO = 1.61803398875f;
-        float angleIncrement = Mathf.PI * 2.0f * GOLDEN_RATIO;
-
-        for (int i = 0; i < NUM_VIEW_DIRECTION; i++)
-        {
-            float t = (float)i / (float)NUM_VIEW_DIRECTION;
-            float inclination = Mathf.Acos(1.0f - 2.0f * t);
-            float azimuth = angleIncrement * i;
-            
-            float x = Mathf.Sin(inclination) * Mathf.Cos(azimuth);
-            float y = Mathf.Sin(inclination) * Mathf.Sin(azimuth);
-            float z = Mathf.Cos(inclination);
-            directions[i] = new Vector3(x, y, z);
-        }
-
-        return directions;
     }
 }
