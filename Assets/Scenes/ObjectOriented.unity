@@ -684,7 +684,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6372060686425941512, guid: a5bdc6509837ab741972b21efd90b369, type: 3}
       propertyPath: m_Name
-      value: Decore
+      value: Decor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
