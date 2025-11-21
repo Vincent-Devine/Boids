@@ -206,11 +206,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 5
-  NeighborDistance: 5
+  NeighborDistance: 2
   SeparationDistance: 1
   SeparationWeight: 1.5
   AlignmentWeight: 1
-  CohesionWeight: 1
+  CohesionWeight: 5
   ObstacleViewDistance: 3
   ObstacleWeight: 20
   ObstacleLayerMask:
@@ -278,8 +278,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RatPrefab: {fileID: 5521697960033603072, guid: 7aa6b606e8c75e448a58dfbfa6064628, type: 3}
-  Count: 1000
-  SpawnRadius: 10
+  Count: 5000
+  SpawnRadius: 20
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

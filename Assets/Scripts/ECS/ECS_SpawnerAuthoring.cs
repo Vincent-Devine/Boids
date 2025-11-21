@@ -43,14 +43,15 @@ public partial struct BoidSpawnSystem : ISystem
 
             foreach (var entity in instances)
             {
-                // Random point in Circle (X, Y) -> Map to (X, Z)
                 float2 randomCircle = random.NextFloat2Direction() * random.NextFloat(0, radius);
 
                 var transform = SystemAPI.GetComponent<LocalTransform>(entity);
-                // CHANGE: Map Y to Z. Keep Y (Height) at 0.
-                transform.Position = new float3(randomCircle.x, 0, randomCircle.y);
+                transform.Position = new float3(randomCircle.x, .01f, randomCircle.y);
                 transform.Rotation = quaternion.identity; // Reset rotation
                 state.EntityManager.SetComponentData(entity, transform);
+
+                float randomOffset = random.NextFloat(0f, 1f);
+                state.EntityManager.SetComponentData(entity, new BoidAnimOffset { Value = randomOffset });
             }
         }
     }

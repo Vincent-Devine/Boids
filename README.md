@@ -30,7 +30,7 @@ Scene: `Scenes\ObjectOriented.unity`
 ## Credit
 Made by: [Vincent DEVINE](https://github.com/Vincent-Devine)
 
-Character Asset: [Starter Assets - ThirdPerson by Unity](https://assetstore.unity.com/packages/essentials/starter-assets-thirdperson-updates-in-new-charactercontroller-pa-196526?srsltid=AfmBOopdG8VHqp3Fo8kroE2Cl3727aKIMhZLZameR2AFm6Vc3FSr50da)
+Character Asset: [Starter Assets - ThirdPerson by Unity](https://assetstore.unity.com/packages/essentials/starter-assets-thirdperson-updates-in-new-charactercontroller-pa-196526?srsltid=AfmBOopdG8VHqp3Fo8kroE2Cl3727aKIMhZLZameR2AFm6Vc3FSr50da) <br>
 Building Asset: [City Kit by kenney](https://kenney.nl/assets/city-kit-suburban)
 
 Implementation of the OOP architecture is based on [Sebastien Lague](https://github.com/SebLague)'s work  on [boids](https://www.youtube.com/watch?v=bqtqltqcQhw)<br>

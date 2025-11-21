@@ -1,5 +1,6 @@
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Rendering;
 
 public struct BoidTag : IComponentData
 {
@@ -8,6 +9,12 @@ public struct BoidTag : IComponentData
 public struct BoidVelocity : IComponentData
 {
     public float2 Value;
+}
+
+[MaterialProperty("_AnimOffset")]
+public struct BoidAnimOffset : IComponentData
+{
+    public float Value;
 }
 
 public struct BoidConfig : IComponentData

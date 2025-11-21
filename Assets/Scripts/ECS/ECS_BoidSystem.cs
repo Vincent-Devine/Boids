@@ -226,7 +226,7 @@ public partial struct BoidJob : IJobEntity
 
         // --- APPLY ---
         velocity.Value = currentVel;
-        transform.Position = new float3(nextPos.x, 0, nextPos.y);
+        transform.Position = new float3(nextPos.x, 0.1f, nextPos.y);
 
         // --- ROTATION FIX ---
         // Only rotate if we are actually moving
