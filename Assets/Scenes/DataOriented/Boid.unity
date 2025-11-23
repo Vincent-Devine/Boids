@@ -279,7 +279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RatPrefab: {fileID: 5521697960033603072, guid: 7aa6b606e8c75e448a58dfbfa6064628, type: 3}
   Count: 5000
-  SpawnRadius: 20
+  SpawnRadius: 25
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
