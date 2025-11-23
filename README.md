@@ -5,24 +5,36 @@ I implemented the system in both Object-Oriented (OOP) and ECS styles to compare
 
 A boid is an autonomous agent following simple rules of alignment, separation and cohesion to simulate flocking behavior [see more](https://www.red3d.com/cwr/boids/)
 
+<p align="center">
+    <img src="./ReadmeAssets/boid.gif" alt="boid"/>
+</p>
+
 ## Table of Content
 - [Implementation](#implementation)
     - [ECS Implementation](#ecs-implementation)
-    - [OOP Implementation](#oop-implementation)
+    - [Object Oriented Design Implementation](#object-oriented-design-implementation)
+    - [Improvement](#improvement)
 - [Technology](#technology)
 - [Credit](#credit)
 
 ## Implementation
 ### ECS Implementation
-todo
+- **Architecture:** Pure DOTS using **Entities 1.0**, **Burst Compiler**, and the **Job System**.
+- **Flocking Logic:** Currently uses a naive **$O(N^2)$** approach (brute-force neighbor check) inside a parallel `IJobEntity`.
+- **Movement:** 2D logic on the **X/Z plane** with Y-axis rotation.
+- **Obstacle Avoidance:** Uses **Unity Physics** with a "Whisker" raycast system to scan angles and steer around static geometry.
 
-### OOP Implementation
-Scene: `Scenes\ObjectOriented.unity`
+### Object Oriented Design Implementation
+* **Architecture:** Standard `MonoBehaviour` scripts attached to GameObjects.
+* **Logic:** Single-threaded `Update()` loops.
+* **Purpose:** Serves as a performance baseline to demonstrate the limitations of traditional Unity architecture when handling hundreds of autonomous agents.
 
-| Script            | Description                                                                                  |
-|-------------------|----------------------------------------------------------------------------------------------|
-| OO_Boid.cs        | Calculates flocking forces (alignment, cohesion, separation) and avoids collisions per boid. |
-| OO_BoidManager.cs | Updates all boids each frame, applying flocking forces and positions.                        |
+### Improvement
+**Current Issue:** The simulation checks every boid against every other boid ($O(N^2)$), causing performance to drop quadratically as population grows. <br>
+**Solution:** Implement a **Spatial Hash Grid**:
+- Boids will be bucketed into grid cells based on position.
+- Queries will only check the specific cell and immediate neighbors.
+- **Goal:** Reduce complexity to **$O(N)$** to support thousands of entities.
 
 ## Technology
 - [Unity 6](https://unity.com/releases/editor/whats-new/6000.0.58f2#installs) *(version: 6000.0.58f2)*
