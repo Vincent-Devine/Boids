@@ -30,7 +30,7 @@ A boid is an autonomous agent following simple rules of alignment, separation an
 * **Purpose:** Serves as a performance baseline to demonstrate the limitations of traditional Unity architecture when handling hundreds of autonomous agents.
 
 ### Improvement
-**Current Issue:** The simulation checks every boid against every other boid ($O(N^2)$), causing performance to drop quadratically as population grows. <br>
+**Current Issue:** The simulation checks every boid against every other boid **$O(N^2)$**, causing performance to drop quadratically as population grows. <br>
 **Solution:** Implement a **Spatial Hash Grid**:
 - Boids will be bucketed into grid cells based on position.
 - Queries will only check the specific cell and immediate neighbors.
